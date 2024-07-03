@@ -42,6 +42,7 @@ def admin_orders_statistics():
 
 def get_dynamic_table(orders: list[list[str | int]]) -> list[list[str | int]]:
     """
+    
     orders besteht aus einer Liste aus Listen. Eine Liste besteht jeweils aus einer order_item_id (int), einer order_id (int) und
     dem product_name (str).
 
@@ -78,7 +79,7 @@ def get_dynamic_table(orders: list[list[str | int]]) -> list[list[str | int]]:
 
     # Sort column headers in lexicographical order (by chars in unicode value range) ascending from low to high
     allProductNames = sorted(allProductNames)
-    all_column_headers: list[str | int] = ["Order ID"] + [d for d in allProductNames]
+    all_column_headers: list[str | int] = ["Order ID"] + [d for d in allProductNames] + ["Total"]
 
     dynamic_table: list[list[str | int]] = [all_column_headers]
     test: int = 0
@@ -99,13 +100,14 @@ def get_dynamic_table(orders: list[list[str | int]]) -> list[list[str | int]]:
     for column in list(zip(*dynamic_table[1:]))[1:]:
         total_row.append(sum(column))
 
-    dynamic_table.append(total_row)
+    # dynamic_table.concatenate([dynamic_table, total_row], axis=1)
 
     dynamic_table = calculate_row_totals(dynamic_table)
 
     # for row in dynamic_table:
     #     print(row)
 
+    # return list(zip(*dynamic_table[1:]))[1:]
     return dynamic_table if (not (((len(dynamic_table))) <= 1)) else []
 
 
